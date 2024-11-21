@@ -1,0 +1,29 @@
+-- Create the database
+CREATE DATABASE school_app;
+
+-- Use the created database
+USE school_app;
+
+-- Create the users table
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('student', 'teacher') NOT NULL
+);
+
+-- Create the tests table
+CREATE TABLE tests (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    teacher_id INT NOT NULL,
+    questions JSON NOT NULL,
+    FOREIGN KEY (teacher_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Create the project_submissions table
+CREATE TABLE project_submissions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT NOT NULL,
+    project_file VARCHAR(255) NOT NULL,
+    FOREIGN KEY (student_id) REFERENCES users(id) ON DELETE CASCADE
+);
